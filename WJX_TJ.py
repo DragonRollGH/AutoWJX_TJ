@@ -18,7 +18,6 @@ class WJX_TJ:
         :param IP: 本地公网IP, 用于伪装代理。
         :param Address: 定位地址, 请手动从历史问卷复制, 程序自动随机经纬坐标的最后两位数。
         """
-
         self.Username = Username
         self.Password = Password
         self.IP = IP
@@ -27,11 +26,11 @@ class WJX_TJ:
             Addr = Address.split(',')
             self.Address = Addr[0][:-2]+str(random.randint(10, 90)) +','+ Addr[1][:-3]+str(random.randint(10, 90))+']'
         self.headers = {'X-Forwarded-For': IP, 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'}
-        self.Success = False
+        self.ifSuccess = False
 
     def run(self):
         self.CheckFeedback(self.Submit(self.Select(self.Login())))
-        return self.Success
+        return self.ifSuccess
 
     def LOG(self, msg):
         with open('WJX_TJ.log','a') as LOG:
@@ -44,7 +43,7 @@ class WJX_TJ:
         try:
             LoginRequ = requests.get(url = LoginUrl, headers = self.headers)
         except Exception as Error:
-            Error('无法打开登录界面')
+            self.Error('无法打开登录界面！\n' + str(Error))
         LoginSoup = BeautifulSoup(LoginRequ.text, 'lxml')
         SubmitUrl = 'https://tongjistudent.wjx.cn/user'+LoginSoup.select('#form1')[0].get('action').lstrip('.')
         VIEWSTATE = LoginSoup.select('#__VIEWSTATE')[0].get('value')
@@ -165,7 +164,7 @@ class WJX_TJ:
                 break
 
     def Success(self):
-        self.Success = True
+        self.ifSuccess = True
         Title = '{}{:\u3000<4}  序号: {:<5}'.format(self.Username, self.relrealname, self.SerialNumber)
         Content = '  凭证: {}  详情: '.format(self.Certificate) + ' '.join(self.Answer)
         self.SendEmail(Title, Content)

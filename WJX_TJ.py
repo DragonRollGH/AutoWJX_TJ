@@ -166,9 +166,10 @@ class WJX_TJ:
 
     def Success(self):
         self.ifSuccess = True
-        Title = '{}{:\u3000<4}  序号: {:<5}'.format(self.Username, self.relrealname, self.SerialNumber)
-        Content = '  凭证: {}  详情: '.format(self.Certificate) + ' '.join(self.Answer)
-        self.SendEmail(Title, Content)
+        Title = '{}{:\u3000<4}  序号: {:<5}  '.format(self.Username, self.relrealname, self.SerialNumber)
+        Content = '凭证: {}  详情: {}  {}'.format(self.Certificate, ' '.join(self.Answer), self.FeedbackRequ.text)
+        ContentEmail = '凭证: {}\n详情: {}\n{}'.format(self.Certificate, '\n'.join(self.Answer), self.FeedbackRequ.text)
+        self.SendEmail(Title, ContentEmail)
         self.LOG(Title + Content)
 
     def Error(self, Error):

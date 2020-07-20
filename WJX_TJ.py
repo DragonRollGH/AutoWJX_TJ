@@ -27,6 +27,7 @@ class WJX_TJ:
             self.Address = Addr[0][:-2]+str(random.randint(10, 90)) +','+ Addr[1][:-3]+str(random.randint(10, 90))+']'
         self.headers = {'X-Forwarded-For': IP, 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'}
         self.ifSuccess = False
+        self.Receivers = ['']    #接收邮箱用户名
 
     def run(self):
         self.CheckFeedback(self.Submit(self.Select(self.Login())))
@@ -176,6 +177,9 @@ class WJX_TJ:
         self.SendEmail(Title, Content)
         self.LOG(Title + Content)
 
+    def SetReceivers(self, Receivers):
+        self.Receivers = Receivers
+        
     def SendEmail(self, title, content):
         mail_host = "smtp.163.com"
         mail_user = ""      #发送邮箱用户名
@@ -183,7 +187,7 @@ class WJX_TJ:
         if not mail_pass:
             return
         sender = ''         #发送邮箱用户名
-        receivers = ['']    #接收邮箱用户名
+        receivers = self.Receivers    
 
         message = MIMEText(content, 'plain', 'utf-8')
         message['From'] = "{}".format(sender)

@@ -89,7 +89,7 @@ class WJX_TJ:
         def get_jqsign(ktimes, jqnonce):
             r = []
             b = ktimes % 10 if ktimes % 10 else 1
-            for char in jqnonce[0]:
+            for char in jqnonce:
                 f = ord(char) ^ b
                 r.append(chr(f))
             jqsign =  ''.join(r)

@@ -1,6 +1,7 @@
 # AutoWJX_TJ
 Automatically submit daily report for tongji students. 自动上报每日健康问卷。
 
+因打卡平台迁移，新版本为：https://github.com/DragonRollGH/AutoChisai_TJ
 ### 实现功能
 - [x] 无人值守自动上报
 - [x] IP伪装
